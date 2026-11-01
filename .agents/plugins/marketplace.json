@@ -1,0 +1,20 @@
+{
+  "name": "dcp-local",
+  "interface": {
+    "displayName": "DCP Local"
+  },
+  "plugins": [
+    {
+      "name": "dcp",
+      "source": {
+        "source": "local",
+        "path": "./plugins/dcp"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

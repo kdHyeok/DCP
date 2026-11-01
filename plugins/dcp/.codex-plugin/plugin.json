@@ -1,0 +1,16 @@
+{
+  "name": "dcp",
+  "version": "0.1.2",
+  "description": "Donghyeok Custum Plugin: 기능 구현 후 질문과 재설명으로 이해를 확인합니다.",
+  "author": {
+    "name": "Donghyeok"
+  },
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "DCP",
+    "shortDescription": "구현 후 질문으로 이해 확인",
+    "category": "Productivity",
+    "capabilities": ["Instructions", "Lifecycle hooks"]
+  }
+}
