@@ -7,7 +7,7 @@
     {
       "name": "dcp",
       "source": "./plugins/dcp",
-      "description": "기능 구현 후 질문과 재설명으로 이해를 확인합니다.",
+      "description": "구현에 쓰인 CS 개념을 선택지로 확인해 학습 목록에 쌓고, 의미 있는 문제 해결 과정을 트러블슈팅 문서로 남깁니다.",
       "category": "productivity"
     }
   ]
