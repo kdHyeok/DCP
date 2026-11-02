@@ -37,6 +37,8 @@ Codex: 맞게 이해한 부분을 짚고 확인을 마칩니다.
 - `plugins/dcp/hooks/understanding.cjs`: 이벤트 입력을 확인하고 학습 지침을 Codex에 전달
 - `plugins/dcp/skills/understanding/SKILL.md`: 질문, 답변 판단, 쉬운 설명, 재질문의 공통 지침
 - `.agents/plugins/marketplace.json`: 설치할 수 있는 로컬 마켓플레이스
+- `plugins/dcp/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`: Claude Code용 매니페스트와 마켓플레이스. Codex는 `.codex-plugin`을 먼저 읽으므로 영향받지 않습니다.
+- 훅 명령은 Codex의 `PLUGIN_ROOT`, Claude Code의 `CLAUDE_PLUGIN_ROOT` 중 있는 값을 씁니다.
 
 새 세션과 매 사용자 메시지에 동일한 지침을 주입합니다. 이해도 판단과 질문 대기는 AI가 현재 대화에서 수행합니다.
 별도 API, 외부 라이브러리, 학습 기록 파일은 사용하지 않습니다.
@@ -60,7 +62,16 @@ codex plugin marketplace add .
 codex plugin add dcp@dcp-local
 ```
 
-설치 후 `/hooks`에서 DCP의 `SessionStart`, `UserPromptSubmit` 두 훅을 검토·신뢰 승인한 다음 새 Codex 채팅을 시작합니다.
+Claude Code에서는 같은 저장소를 Claude Code 마켓플레이스로 등록합니다. 훅·스킬은 Codex와 같은 파일을 씁니다.
+
+```powershell
+claude plugin marketplace add kdHyeok/DCP
+claude plugin install dcp@dcp-local
+```
+
+Claude Code는 설치 즉시 훅이 활성화되며, 새 세션부터 적용됩니다.
+
+Codex는 설치 후 `/hooks`에서 DCP의 `SessionStart`, `UserPromptSubmit` 두 훅을 검토·신뢰 승인한 다음 새 Codex 채팅을 시작합니다.
 설치·활성화와 훅 신뢰 승인은 별개입니다. 다른 사용자의 승인 상태는 함께 설치되지 않습니다.
 플러그인 자동 훅 외에 직접 호출하려면 `understanding` 스킬을 선택하고 확인할 구현을 지정합니다.
 소스를 수정한 뒤에는 Codex의 설치 흐름으로 갱신하고 새 채팅에서 확인합니다. 설치 캐시를 직접 수정하지 않습니다.

@@ -25,13 +25,16 @@ for (const event of ['SessionStart', 'UserPromptSubmit']) {
     assert.equal(hooks[event][0].hooks[0].type, 'command');
   });
 
-  test(`${event}: the registered shell command works with spaces and Korean in PLUGIN_ROOT`, () => {
+  // Codex exports PLUGIN_ROOT; Claude Code exports CLAUDE_PLUGIN_ROOT.
+  for (const rootVar of ['PLUGIN_ROOT', 'CLAUDE_PLUGIN_ROOT']) test(`${event}: the registered shell command works with spaces and Korean in ${rootVar}`, () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dcp 한글 '));
     try {
       fs.cpSync(root, dir, { recursive: true });
+      const env = { ...process.env, [rootVar]: dir };
+      if (rootVar !== 'PLUGIN_ROOT') delete env.PLUGIN_ROOT;
       const result = spawnSync(hooks[event][0].hooks[0].command, {
         shell: true,
-        env: { ...process.env, PLUGIN_ROOT: dir },
+        env,
         input: JSON.stringify({ hook_event_name: event }),
         encoding: 'utf8',
         timeout: 5000,
@@ -75,4 +78,17 @@ test('Codex hook package selects the native manifest and real components', () =>
   assert.equal(codex.name, 'dcp');
   assert.ok(fs.statSync(path.join(root, codex.hooks)).isFile());
   assert.ok(fs.statSync(path.join(root, codex.skills, 'understanding/SKILL.md')).isFile());
+});
+
+test('Claude Code package exposes the same plugin through its own manifests', () => {
+  const claude = JSON.parse(fs.readFileSync(path.join(root, '.claude-plugin/plugin.json'), 'utf8'));
+  const codex = JSON.parse(fs.readFileSync(path.join(root, '.codex-plugin/plugin.json'), 'utf8'));
+  assert.equal(claude.name, codex.name);
+  assert.equal(claude.version, codex.version);
+  // Claude Code auto-loads hooks/hooks.json and skills/ from the plugin root.
+  assert.ok(fs.statSync(path.join(root, 'hooks/hooks.json')).isFile());
+  assert.ok(fs.statSync(path.join(root, 'skills/understanding/SKILL.md')).isFile());
+  const market = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../.claude-plugin/marketplace.json'), 'utf8'));
+  const entry = market.plugins.find((plugin) => plugin.name === claude.name);
+  assert.equal(path.resolve(__dirname, '..', entry.source), root);
 });

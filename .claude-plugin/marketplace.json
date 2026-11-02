@@ -1,0 +1,14 @@
+{
+  "name": "dcp-local",
+  "owner": {
+    "name": "Donghyeok"
+  },
+  "plugins": [
+    {
+      "name": "dcp",
+      "source": "./plugins/dcp",
+      "description": "기능 구현 후 질문과 재설명으로 이해를 확인합니다.",
+      "category": "productivity"
+    }
+  ]
+}
