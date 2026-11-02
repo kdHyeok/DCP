@@ -8,6 +8,12 @@
             "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT||process.env.CLAUDE_PLUGIN_ROOT,'hooks/understanding.cjs'))\"",
             "timeout": 10,
             "statusMessage": "DCP 이해도 확인 지침 로드"
+          },
+          {
+            "type": "command",
+            "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT||process.env.CLAUDE_PLUGIN_ROOT,'hooks/troubleshooting.cjs'))\"",
+            "timeout": 10,
+            "statusMessage": "DCP 트러블슈팅 기록 지침 로드"
           }
         ]
       }
@@ -20,6 +26,12 @@
             "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT||process.env.CLAUDE_PLUGIN_ROOT,'hooks/understanding.cjs'))\"",
             "timeout": 10,
             "statusMessage": "DCP 이해도 확인 절차 유지"
+          },
+          {
+            "type": "command",
+            "command": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT||process.env.CLAUDE_PLUGIN_ROOT,'hooks/troubleshooting.cjs'))\"",
+            "timeout": 10,
+            "statusMessage": "DCP 트러블슈팅 기록 절차 유지"
           }
         ]
       }
