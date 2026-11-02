@@ -67,7 +67,7 @@ for (const event of ['SessionStart', 'UserPromptSubmit']) {
   });
 }
 
-test('the understanding hook keeps its original command so existing Codex trust survives', () => {
+test('the understanding hook keeps its original command; content trust is checked by Codex', () => {
   for (const event of ['SessionStart', 'UserPromptSubmit']) {
     assert.equal(
       hooks[event][0].hooks[0].command,

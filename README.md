@@ -94,7 +94,7 @@ claude plugin install dcp@dcp-local
 Claude Code는 설치 즉시 훅이 활성화되며, 새 세션부터 적용됩니다.
 
 Codex는 설치 후 `/hooks`에서 DCP의 훅 4개(`SessionStart`, `UserPromptSubmit` × `understanding`, `troubleshooting`)를 검토·신뢰 승인한 다음 새 Codex 채팅을 시작합니다.
-0.1.x에서 업데이트했다면 기존 `understanding` 훅 명령은 바뀌지 않았지만, 새 `troubleshooting` 훅 2개는 따로 승인해야 합니다. 승인 전에는 실행되지 않습니다.
+0.1.x에서 업데이트했다면 네 훅 모두 신뢰 상태를 확인해야 합니다. 기존 `understanding` 명령이 같아도 내용 해시가 바뀌어 `modified`로 표시될 수 있으며, 새 `troubleshooting` 훅은 `untrusted`로 표시됩니다. 검토 후 현재 버전을 다시 승인해야 실행됩니다.
 설치·활성화와 훅 신뢰 승인은 별개입니다. 다른 사용자의 승인 상태는 함께 설치되지 않습니다.
 `~/.dcp/learning.md`는 작업 폴더 밖에 있어서 Codex 샌드박스나 Claude Code 권한 설정에 따라 쓰기 승인을 요구할 수 있습니다. 쓰기가 거부되면 AI가 추가할 줄을 대신 보여 줍니다.
 자동 훅 외에 직접 호출하려면 `understanding` 또는 `troubleshooting` 스킬을 선택합니다.
